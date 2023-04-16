@@ -76,6 +76,6 @@ const toggleMobileNav = () => {
 
 .mobile-nav-enter-from,
 .mobile-nav-leave-to {
-  @apply transform translate-x-[-250px]
+  @apply transform translate-x-[-250px];
 }
 </style>
