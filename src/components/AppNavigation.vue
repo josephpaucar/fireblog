@@ -63,13 +63,6 @@ const toggleMobileNav = () => {
 </template>
 
 <style scoped>
-.link {
-@apply font-medium py-2 transition-all duration-300 ease-out;
-}
-.link:hover {
-  @apply text-blue-400;
-}
-
 .mobile-nav-enter-active, .mobile-nav-leave-active{
   @apply transition-all duration-1000 ease-in-out;
 }

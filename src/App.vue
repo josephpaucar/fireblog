@@ -13,4 +13,10 @@ import AppFooter from './components/AppFooter.vue';
 </template>
 
 <style>
+.link {
+  @apply font-medium py-2 transition-all duration-300 ease-out;
+}
+.link:hover {
+  @apply text-blue-400;
+}
 </style>
