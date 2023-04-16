@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from 'vue';
 import BlogPost from '../components/BlogPost.vue';
+import BlogCard from '../components/BlogCard.vue';
 import coding from '../assets/blogPhotos/coding.jpg'
 
 const welcomeScreen = reactive([
@@ -46,8 +47,28 @@ const sampleBlogCards = reactive([
   </div>
   
   <BlogPost :post="post" v-for="(post, index) in sampleBlogPost" :key="index" />
+
+  <div class="blog-card-wrapper ">
+    <div class="container mx-auto">
+      <h3 class="blog-card-title">View More Recent Blogs</h3>
+      <div class="blog-cards">
+        <BlogCard :post="post" v-for="(post, index) in sampleBlogCards" :key="index"/>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+.blog-card-wrapper {
+  @apply my-[100px] px-3 font-quicksand;
+
+  .blog-card-title {
+    @apply text-2xl mb-5 font-medium;
+  }
+
+  .blog-cards {
+    @apply grid gap-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+}
 
 </style>
