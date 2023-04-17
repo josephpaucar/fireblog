@@ -40,7 +40,7 @@ const toggleMobileNav = () => {
           <li><router-link class="link ml-4" :to="{ name: 'home' }">Home</router-link></li>
           <li><router-link class="link ml-4" :to="{ name: 'blogs' }">Blogs</router-link></li>
           <li><router-link class="link ml-4" :to="{ name: 'about' }">Create Post</router-link></li>
-          <li><router-link class="link ml-4" :to="{ name: 'about' }">Login/Register</router-link></li>
+          <li><router-link class="link ml-4" :to="{ name: 'login' }">Login/Register</router-link></li>
         </ul>
       </div>
 
@@ -56,7 +56,7 @@ const toggleMobileNav = () => {
         <li class="mb-3"><router-link class="link" :to="{ name: 'home' }">Home</router-link></li>
         <li class="mb-3"><router-link class="link" :to="{ name: 'blogs' }">Blogs</router-link></li>
         <li class="mb-3"><router-link class="link" :to="{ name: 'about' }">Create Post</router-link></li>
-        <li class="mb-3"><router-link class="link" :to="{ name: 'about' }">Login/Register</router-link></li>
+        <li class="mb-3"><router-link class="link" :to="{ name: 'login' }">Login/Register</router-link></li>
       </ul>
     </Transition>
   </header>

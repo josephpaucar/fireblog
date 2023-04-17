@@ -1,15 +1,25 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { ref, watch } from 'vue';
+import { RouterView, useRoute } from 'vue-router'
 import AppNavigation from './components/AppNavigation.vue';
 import AppFooter from './components/AppFooter.vue';
+
+const hideNavigation = ref(null)
+const route = useRoute()
+
+const checkRoute = () => {
+  (route.name === 'login' || route.name === 'register' || route.name === 'forgotPassword') ? hideNavigation.value = true : hideNavigation.value = false
+}
+
+watch(route, checkRoute)
 </script>
 
 <template>
-  <AppNavigation />
+  <AppNavigation v-if="!hideNavigation" />
 
   <RouterView />
 
-  <AppFooter />
+  <AppFooter v-if="!hideNavigation" />
 </template>
 
 <style>

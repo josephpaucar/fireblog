@@ -32,9 +32,9 @@
         <div class="mx-auto col-2 w-full md:w-1/2">
           <ul class="my-4 md:my-0 flex justify-center md:block">
             <li><router-link class="link mr-3 md:mr-0" :to="{ name: 'home' }">Home</router-link></li>
-            <li><router-link class="link mr-3 md:mr-0" :to="{ name: 'about' }">Blogs</router-link></li>
+            <li><router-link class="link mr-3 md:mr-0" :to="{ name: 'blogs' }">Blogs</router-link></li>
             <li><router-link class="link mr-3 md:mr-0" :to="{ name: 'about' }">Create Post</router-link></li>
-            <li><router-link class="link" :to="{ name: 'about' }">Login In / Register</router-link></li>
+            <li><router-link class="link" :to="{ name: 'login' }">Login In / Register</router-link></li>
           </ul>
         </div>
       </div>

@@ -10,6 +10,11 @@ import './assets/main.css'
 
 const app = createApp(App)
 
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title} | Fireblog`
+  next();
+})
+
 app.use(createPinia())
 app.use(router)
 app.use(VueEditor)
