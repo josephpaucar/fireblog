@@ -38,7 +38,7 @@ const toggleMobileNav = () => {
       <div class="nav-links">
         <ul class="flex items-center" v-show="!mobile" >
           <li><router-link class="link ml-4" :to="{ name: 'home' }">Home</router-link></li>
-          <li><router-link class="link ml-4" :to="{ name: 'about' }">Blogs</router-link></li>
+          <li><router-link class="link ml-4" :to="{ name: 'blogs' }">Blogs</router-link></li>
           <li><router-link class="link ml-4" :to="{ name: 'about' }">Create Post</router-link></li>
           <li><router-link class="link ml-4" :to="{ name: 'about' }">Login/Register</router-link></li>
         </ul>
@@ -54,7 +54,7 @@ const toggleMobileNav = () => {
     <Transition name="mobile-nav">
       <ul v-show="mobileNav" class="p-7 w-[250px] flex flex-col fixed h-full top-0 left-0 bg-slate-600 text-white">
         <li class="mb-3"><router-link class="link" :to="{ name: 'home' }">Home</router-link></li>
-        <li class="mb-3"><router-link class="link" :to="{ name: 'about' }">Blogs</router-link></li>
+        <li class="mb-3"><router-link class="link" :to="{ name: 'blogs' }">Blogs</router-link></li>
         <li class="mb-3"><router-link class="link" :to="{ name: 'about' }">Create Post</router-link></li>
         <li class="mb-3"><router-link class="link" :to="{ name: 'about' }">Login/Register</router-link></li>
       </ul>

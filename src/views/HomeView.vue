@@ -1,8 +1,12 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import BlogPost from '../components/BlogPost.vue';
 import BlogCard from '../components/BlogCard.vue';
 import coding from '../assets/blogPhotos/coding.jpg'
+import { useBlogsStore } from '@/stores/blogs.js'
+
+const blogsStore = useBlogsStore()
+const blogs = computed(() => blogsStore.blogs)
 
 const welcomeScreen = reactive([
   {
@@ -25,13 +29,6 @@ const sampleBlogPost = reactive([
     blogCoverPhoto: "designed-for-everyone"
   }
 ])
-
-const sampleBlogCards = reactive([
-  { blogTitle: "Blog Card #1", blogCoverPhoto: "stock-1", blogDate: "May 1, 2021" },
-  { blogTitle: "Blog Card #2", blogCoverPhoto: "stock-2", blogDate: "May 1, 2021" },
-  { blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "May 1, 2021" },
-  { blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "May 1, 2021" },
-])
 </script>
 
 <template>
@@ -52,13 +49,13 @@ const sampleBlogCards = reactive([
     <div class="container mx-auto">
       <h3 class="blog-card-title">View More Recent Blogs</h3>
       <div class="blog-cards">
-        <BlogCard :post="post" v-for="(post, index) in sampleBlogCards" :key="index"/>
+        <BlogCard :post="post" v-for="(post, index) in blogs" :key="index"/>
       </div>
     </div>
   </div>
 
   <div class="updates">
-    <div class="container mx-auto flex flex-col items-center md:flex-row md:justify-center">
+    <div class="container mx-auto flex flex-col items-center md:flex-row md:justify-around ">
       <h2>Never mis a post. Register for your free account today!</h2>
       <router-link class="flex items-center link p-0 text-base" :to="{ name: 'about' }">
         Register for Fireblogs <span><svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-right" class="ml-2 w-4 h-4 svg-inline--fa fa-arrow-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M216.464 36.465l-7.071 7.07c-4.686 4.686-4.686 12.284 0 16.971L387.887 239H12c-6.627 0-12 5.373-12 12v10c0 6.627 5.373 12 12 12h375.887L209.393 451.494c-4.686 4.686-4.686 12.284 0 16.971l7.071 7.07c4.686 4.686 12.284 4.686 16.97 0l211.051-211.05c4.686-4.686 4.686-12.284 0-16.971L233.434 36.465c-4.686-4.687-12.284-4.687-16.97 0z"></path></svg></span>
