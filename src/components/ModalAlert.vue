@@ -28,7 +28,7 @@ const props = defineProps({
       }
 
       button {
-        @apply self-center;
+        @apply mt-5 py-2 px-5 bg-teal-200 self-center;
       }
     }
   }

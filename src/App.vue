@@ -3,6 +3,11 @@ import { ref, watch } from 'vue';
 import { RouterView, useRoute } from 'vue-router'
 import AppNavigation from './components/AppNavigation.vue';
 import AppFooter from './components/AppFooter.vue';
+import { useProfileStore } from '@/stores/profile.js'
+import { onAuthStateChanged, getAuth } from "firebase/auth";
+
+const profileStore = useProfileStore()
+const auth = getAuth()
 
 const hideNavigation = ref(null)
 const route = useRoute()
@@ -12,6 +17,15 @@ const checkRoute = () => {
 }
 
 watch(route, checkRoute)
+
+onAuthStateChanged(auth, (user) => {
+  if(user) {
+    profileStore.getCurrentUser(user.uid)
+  }
+})
+
+console.log(profileStore.profile)
+
 </script>
 
 <template>

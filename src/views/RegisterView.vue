@@ -1,12 +1,45 @@
 <script setup>
-import background from '../assets/background.png'
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+import background from '../assets/background.png'
+//Firebase & Vuefire
+import { useFirebaseAuth, useFirestore } from 'vuefire'
+import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from '@firebase/auth'
 
-const firstName = ref(null)
-const lastName = ref(null)
-const userName = ref(null)
-const email = ref(null)
-const password = ref(null)
+const auth = useFirebaseAuth()
+const router = useRouter()
+const db = useFirestore()
+
+const newUser = ref({
+  firstName: '',
+  lastName: '',
+  userName: '',
+  email: '',
+  password: ''
+})
+
+async function createUser() {
+  createUserWithEmailAndPassword(
+    auth,
+    newUser.value.email,
+    newUser.value.password
+  )
+    .then((userCredential) => {
+      const user = userCredential.user
+      const newDoc = setDoc(doc(db, "users", user.uid), {
+        ...newUser.value,
+      })
+      router.push({ name: 'home'})
+    })
+    .catch((error) => {
+      const errorCode = error.code
+      console.log("🚀 ~ file: RegisterView.vue:32 ~ createUser ~ errorCode:", errorCode)
+      const errorMessage = error.message
+      console.log("🚀 ~ file: RegisterView.vue:33 ~ createUser ~ errorMessage:", errorMessage)
+      
+    })
+}
 </script>
 
 <template>
@@ -21,27 +54,70 @@ const password = ref(null)
         <div class="inputs my-4">
           <div class="rounded-md max-w-[300px] mx-auto">
             <label for="firstname" class="sr-only">Firstname</label>
-            <input id="firstname" name="firstname" type="text" autocomplete="firstname" required class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Firstname" v-model="firstName">
+            <input 
+              id="firstname" 
+              name="firstname" 
+              type="text" 
+              autocomplete="firstname" 
+              required 
+              class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+              placeholder="Firstname" 
+              v-model="newUser.firstName">
           </div>
           <div class="rounded-md max-w-[300px] mx-auto">
             <label for="lastname" class="sr-only">Lastname</label>
-            <input id="lastname" name="lastname" type="text" autocomplete="lastname" required class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Lastname" v-model="lastName">
+            <input 
+              id="lastname" 
+              name="lastname" 
+              type="text" 
+              autocomplete="lastname" 
+              required 
+              class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+              placeholder="Lastname" 
+              v-model="newUser.lastName">
           </div>
           <div class="rounded-md max-w-[300px] mx-auto">
             <label for="username" class="sr-only">Username</label>
-            <input id="username" name="username" type="text" autocomplete="username" required class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Username" v-model="userName">
+            <input 
+              id="username" 
+              name="username" 
+              type="text" 
+              autocomplete="username" 
+              required 
+              class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+              placeholder="Username" 
+              v-model="newUser.userName">
           </div>
           <div class="rounded-md max-w-[300px] mx-auto">
             <label for="email-address" class="sr-only">Email address</label>
-            <input id="email-address" name="email" type="email" autocomplete="email" required class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address" v-model="email">
+            <input 
+              id="email-address" 
+              name="email" 
+              type="email" 
+              autocomplete="email" 
+              required 
+              class="mb-2 relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+              placeholder="Email address" 
+              v-model="newUser.email">
           </div>
           <div class="rounded-md max-w-[300px] mx-auto">
             <label for="password" class="sr-only">Password</label>
-            <input id="password" name="password" type="password" autocomplete="current-password" required class="relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Password" v-model="password">
+            <input 
+              id="password" 
+              name="password" 
+              type="password" 
+              autocomplete="current-password" 
+              required 
+              class="relative block w-full rounded-md border-0 px-1.5 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+              placeholder="Password" 
+              v-model="newUser.password">
           </div>
         </div>
 
-        <button type="submit" class="flex w-auto mx-auto justify-center rounded-md bg-indigo-600 px-5 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <button 
+          @click.prevent="createUser"
+          type="submit" 
+          class="flex w-auto mx-auto justify-center rounded-md bg-indigo-600 px-5 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Sign up
         </button>
         

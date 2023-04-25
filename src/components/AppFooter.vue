@@ -1,3 +1,11 @@
+<script setup>
+import { computed } from 'vue';
+import { useProfileStore } from '@/stores/profile.js'
+
+const profileStore = useProfileStore()
+const user = computed(() => profileStore.logedIn)
+</script>
+
 <template>
   <footer class="bg-slate-800 text-white">
     <div class="block md:flex md:items-end container mx-auto px-3 pt-[100px] pb-[50px] font-quicksand">
@@ -34,7 +42,9 @@
             <li><router-link class="link mr-3 md:mr-0" :to="{ name: 'home' }">Home</router-link></li>
             <li><router-link class="link mr-3 md:mr-0" :to="{ name: 'blogs' }">Blogs</router-link></li>
             <li><router-link class="link mr-3 md:mr-0" :to="{ name: 'about' }">Create Post</router-link></li>
-            <li><router-link class="link" :to="{ name: 'login' }">Login In / Register</router-link></li>
+            <li v-if="!user">
+              <router-link class="link" :to="{ name: 'login' }">Login In / Register</router-link>
+            </li>
           </ul>
         </div>
       </div>
@@ -44,9 +54,6 @@
     </div>
   </footer>
 </template>
-
-<script setup>
-</script>
 
 <style scoped>
 .link {

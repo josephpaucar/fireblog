@@ -3,7 +3,10 @@ import background from '../assets/background.png'
 import ModalAlert from '../components/ModalAlert.vue';
 import LoadingState from '../components/LoadingState.vue';
 import { ref } from 'vue';
+import { useFirebaseAuth } from 'vuefire'
+import { sendPasswordResetEmail } from '@firebase/auth'
 
+const auth = useFirebaseAuth()
 const email = ref(null)
 const modalActive = ref(false)
 const modalMessage = ref("")
@@ -13,6 +16,22 @@ const closeModal = () => {
   modalActive.value = !modalActive.value
   email.value = ""
 }
+
+function resetPassword() {
+  loading.value = true
+  sendPasswordResetEmail(auth, email.value)
+    .then(() => {
+      modalMessage.value = "If your account exists, you will receive an email"
+      loading.value = false
+      modalActive.value = true
+    })
+    .catch((error) => {
+      const errorMessage = error.message
+      modalMessage.value = errorMessage
+      loading.value = false
+      modalActive.value = true
+    })
+}
 </script>
 
 <template>
@@ -21,6 +40,10 @@ const closeModal = () => {
     <LoadingState v-if="loading" />
     <div class="relative h-screen form-wrap w-full md:w-2/5 flex items-center">
       <form action="" class="login w-4/5 mx-auto">
+        <p class="text-center mb-2">
+          Back to
+          <router-link class="font-medium text-indigo-600 hover:text-indigo-500" :to="{name: 'login'}">Login</router-link>
+        </p>
         <h2 class="text-center mb-2 text-3xl font-bold tracking-tight text-gray-900">Reset password</h2>
         <p class="text-center mb-6">
           Forgot your password? Enter your email to reset it
@@ -32,7 +55,10 @@ const closeModal = () => {
           </div>
         </div>
 
-        <button type="submit" class="flex w-auto mx-auto justify-center rounded-md bg-indigo-600 px-5 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <button 
+          @click.prevent="resetPassword"
+          type="submit" 
+          class="flex w-auto mx-auto justify-center rounded-md bg-indigo-600 px-5 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Reset password
         </button>
         
