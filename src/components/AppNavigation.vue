@@ -79,10 +79,10 @@ async function signOutOfFirebase() {
               </div>
               <ul class="options p-4">
                 <li>
-                  <router-link class="link text-sm" :to="{ name: 'home' }">Profile</router-link>
+                  <router-link class="link text-sm" :to="{ name: 'profile' }">Profile</router-link>
                 </li>
                 <li>
-                  <router-link class="link text-sm" :to="{ name: 'home' }">Admin</router-link>
+                  <router-link class="link text-sm" :to="{ name: 'admin' }">Admin</router-link>
                 </li>
                 <li>
                   <div 

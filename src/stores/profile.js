@@ -1,5 +1,5 @@
 import { useFirestore } from 'vuefire'
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { defineStore } from 'pinia'
 
 export const useProfileStore = defineStore('profile', {
@@ -26,6 +26,17 @@ export const useProfileStore = defineStore('profile', {
       this.profile.profileId = id,
       this.profile.initials = firebaseProfile.data().firstName.charAt(0) + firebaseProfile.data().lastName.charAt(0)
       this.logedIn = true
+    },
+    async updateUserSettings(id) {
+      const db = useFirestore()
+      const docRef = doc(db, 'users', id)
+      await updateDoc(docRef, {
+        firstName: this.profile.firstname,
+        lastName: this.profile.lastname,
+        userName: this.profile.username,
+      })
+      const firebaseProfile = await getDoc(docRef)
+      this.profile.initials = firebaseProfile.data().firstName.charAt(0) + firebaseProfile.data().lastName.charAt(0)
     }
   }
 })
