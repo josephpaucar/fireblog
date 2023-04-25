@@ -15,6 +15,9 @@ export const useProfileStore = defineStore('profile', {
     logedIn: false
   }),
   actions: {
+    changeInitials() {
+      this.profile.initials = this.firstname.charAt(0) + this.lastname.charAt(0)
+    },
     async getCurrentUser(id) {
       const db = useFirestore()
       const docRef = doc(db, 'users', id)
@@ -35,8 +38,7 @@ export const useProfileStore = defineStore('profile', {
         lastName: this.profile.lastname,
         userName: this.profile.username,
       })
-      const firebaseProfile = await getDoc(docRef)
-      this.profile.initials = firebaseProfile.data().firstName.charAt(0) + firebaseProfile.data().lastName.charAt(0)
+      this.changeInitials()
     }
   }
 })
